@@ -3,6 +3,12 @@ import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
@@ -56,6 +62,9 @@ const App = () => {
 
   const [typeOfDataForTheMap, setTypeOfDataForTheMap] = useState("total_cases");
   const [data, setData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(
+    new Date("2020-02-18")
+  );
 
   useEffect(() => {
     csv(
@@ -64,6 +73,20 @@ const App = () => {
       setData(data);
     });
   }, [typeOfDataForTheMap]);
+
+  //   var filteredData = consdata.filter(function(d)
+  // {
+
+  //         if( d["City"] == "City") || (d["Criticality"]=="High" || d["Criticality"]=="Low")
+  //         {
+  //             return d;
+  //         }
+
+  //     })
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleTypeOfDataForTheMap = (event, newTypeOfDataForTheMap) => {
     if (newTypeOfDataForTheMap !== null) {
@@ -88,19 +111,24 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root} maxWidth='false'>
-      <Grid
-        container
-        direction="row"
-        spacing={3}
-        // xs={12}
-        // sm={12}
-        // md={12}
-        // lg={12}
-        alignItems="center"
-        // justifyContent="center"
-      >
+    <Container className={classes.root} maxWidth="false">
+      <Grid container direction="row" spacing={3} alignItems="center">
         <Grid item xs={12} sm={12} md={3} lg={3} spacing={0}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Pick a date"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
           <ToggleButtonGroup
             orientation="vertical"
             value={typeOfDataForTheMap}
