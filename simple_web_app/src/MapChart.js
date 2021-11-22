@@ -14,7 +14,7 @@ const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
 const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
+  // .domain([0.29, 0.68])
   .range(["#ffedea", "#ff5233"]);
 
 const MapChart = () => {
@@ -46,7 +46,7 @@ const MapChart = () => {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  fill={d ? colorScale(d["total_cases"]) : "#F5F4F6"}
+                  fill={d ? colorScale(d["total_cases_per_million"]) : "#F5F4F6"}
                 />
               );
             })
