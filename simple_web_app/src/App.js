@@ -75,6 +75,10 @@ const App = () => {
     root: {
       fontFamily: "Calibri",
       textAlign: "center",
+      flexGrow: 1,
+      justifyContent: "space-evenly",
+      fontSize: 50,
+      background: "#FFFFF0",
     },
     button: {
       background: "#F5F5DC",
@@ -84,84 +88,186 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.root} maxWidth='false'>
       <Grid
         container
+        direction="row"
         spacing={3}
-        xs={12}
-        sm={12}
-        md={12}
-        lg={12}
+        // xs={12}
+        // sm={12}
+        // md={12}
+        // lg={12}
         alignItems="center"
-        justifyContent="center"
+        // justifyContent="center"
       >
-        <Grid
-          container
-          spacing={3}
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Grid item xs={12} sm={12} md={6} lg={6} spacing={0}>
-            <ToggleButtonGroup
-              value={typeOfDataForTheMap}
-              exclusive
-              onChange={handleTypeOfDataForTheMap}
-              aria-label="text variable"
+        <Grid item xs={12} sm={12} md={3} lg={3} spacing={0}>
+          <ToggleButtonGroup
+            orientation="vertical"
+            value={typeOfDataForTheMap}
+            exclusive
+            onChange={handleTypeOfDataForTheMap}
+            aria-label="text variable"
+          >
+            <ToggleButton
+              style={{ width: 250 }}
+              value="total_cases"
+              aria-label="left aligned"
+              className={classes.button}
             >
-              <ToggleButton
-                style={{ width: 200 }}
-                value="total_cases"
-                aria-label="left aligned"
-                className={classes.button}
-              >
-                {/* <img src={rainLogo} alt="rainLogo" width="36" height="36" /> */}
-                total_cases
-              </ToggleButton>
-              <ToggleButton
-                style={{ width: 200 }}
-                value="total_deaths"
-                aria-label="right aligned"
-                className={classes.button}
-              >
-                {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-                total_deaths
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
+              {/* <img src={rainLogo} alt="rainLogo" width="36" height="36" /> */}
+              total_cases
+            </ToggleButton>
+            <ToggleButton
+              style={{ width: 250 }}
+              value="total_deaths"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              total_deaths
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="total_cases_per_million"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              total_cases_per_million
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="total_deaths_per_million"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              total_deaths_per_million
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="hosp_patients"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              hosp_patients
+            </ToggleButton>
+            <ToggleButton
+              style={{ width: 250 }}
+              value="total_tests"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              total_tests
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="total_vaccinations"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              total_vaccinations
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="people_fully_vaccinated"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              people_fully_vaccinated
+            </ToggleButton>
+            <ToggleButton
+              style={{ width: 250 }}
+              value="new_vaccinations"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              new_vaccinations
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="population"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              population
+            </ToggleButton>
+            <ToggleButton
+              style={{ width: 250 }}
+              value="population_density"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              population_density
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="median_age"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              median_age
+            </ToggleButton>
+            <ToggleButton
+              style={{ width: 250 }}
+              value="gdp_per_capita"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              gdp_per_capita
+            </ToggleButton>{" "}
+            <ToggleButton
+              style={{ width: 250 }}
+              value="life_expectancy"
+              aria-label="right aligned"
+              className={classes.button}
+            >
+              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
+              life_expectancy
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+        <Grid item xs={12} sm={12} md={9} lg={9} spacing={0}>
+          <ComposableMap
+            projectionConfig={{
+              rotate: [-10, 0, 0],
+              scale: 147,
+            }}
+          >
+            <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
+            <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
+            {data.length > 0 && (
+              <Geographies geography={geoUrl}>
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const d = data.find(
+                      (s) => s.iso_code === geo.properties.ISO_A3
+                    );
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill={
+                          d ? colorScale(d[typeOfDataForTheMap]) : "#F5F4F6"
+                        }
+                      />
+                    );
+                  })
+                }
+              </Geographies>
+            )}
+          </ComposableMap>
         </Grid>
       </Grid>
-      <ComposableMap
-        projectionConfig={{
-          rotate: [-10, 0, 0],
-          scale: 147,
-        }}
-      >
-        <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
-        <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-        {data.length > 0 && (
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                const d = data.find(
-                  (s) => s.iso_code === geo.properties.ISO_A3
-                );
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    fill={d ? colorScale(d[typeOfDataForTheMap]) : "#F5F4F6"}
-                  />
-                );
-              })
-            }
-          </Geographies>
-        )}
-      </ComposableMap>
     </Container>
   );
 };
