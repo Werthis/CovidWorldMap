@@ -26,44 +26,14 @@ const geoUrl =
 
 const colorScale = scaleLinear()
   // .domain([0.29, 0.68])
-  .range(["#FAEBD7", "#8B0000"])
-  .interpolate(interpolateHcl);
+  .range(["#FFC0CB", "#DC143C"]);
+// .interpolate(interpolateHcl);
 
 const App = () => {
-  // const [date, setDate] = useState("2021-08-02");
-  // const [totalCases, setTotalCases] = useState();
-  // const [totalDeaths, setTotalDeaths] = useState();
-  // const [total_cases_per_million, setTotal_cases_per_million] = useState();
-  // const [total_tests, setTotal_tests] = useState();
-  // const [total_vaccinations, setTotal_vaccinations] = useState();
-  // const [people_fully_vaccinated, setPeople_fully_vaccinated] = useState();
-  // const [new_vaccinations, setNew_vaccinations] = useState();
-  // const [population, setPopulation] = useState();
-  // const [population_density, setPopulation_density] = useState();
-  // const [median_age, setMedian_age] = useState();
-  // const [gdp_per_capita, setGdp_per_capita] = useState();
-  // const [life_expectancy, setLife_expectancy] = useState();
-  // iso_code,continent,location,
-  // date,
-  // total_cases, new_cases,new_cases_smoothed,
-  // total_deaths, new_deaths,new_deaths_smoothed,
-  // total_cases_per_million,new_cases_per_million,new_cases_smoothed_per_million,
-  // total_deaths_per_million,new_deaths_per_million,new_deaths_smoothed_per_million,reproduction_rate,icu_patients,icu_patients_per_million,
-  // hosp_patients, hosp_patients_per_million,weekly_icu_admissions,weekly_icu_admissions_per_million,weekly_hosp_admissions,weekly_hosp_admissions_per_million,new_tests,
-  // total_tests,total_tests_per_thousand,new_tests_per_thousand,new_tests_smoothed,new_tests_smoothed_per_thousand,positive_rate,tests_per_case,tests_units,
-  // total_vaccinations,people_vaccinated,
-  // people_fully_vaccinated,total_boosters,
-  // new_vaccinations,new_vaccinations_smoothed,total_vaccinations_per_hundred,people_vaccinated_per_hundred,people_fully_vaccinated_per_hundred,total_boosters_per_hundred,new_vaccinations_smoothed_per_million,new_people_vaccinated_smoothed,new_people_vaccinated_smoothed_per_hundred,stringency_index,
-  // population,
-  // population_density,
-  // median_age,aged_65_older,aged_70_older,
-  // gdp_per_capita,extreme_poverty,cardiovasc_death_rate,diabetes_prevalence,female_smokers,male_smokers,handwashing_facilities,hospital_beds_per_thousand,
-  // life_expectancy,human_development_index,excess_mortality_cumulative_absolute,excess_mortality_cumulative,excess_mortality,excess_mortality_cumulative_per_million
-
   const [typeOfDataForTheMap, setTypeOfDataForTheMap] = useState("total_cases");
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
-    new Date("2020-02-18")
+    new Date("2020-02-26T21:11:54")
   );
 
   useEffect(() => {
@@ -74,15 +44,18 @@ const App = () => {
     });
   }, [typeOfDataForTheMap]);
 
-  //   var filteredData = consdata.filter(function(d)
-  // {
+  var filteredData = data.filter(function (d) {
+    if (d["date"] === selectedDate.toISOString().substr(0, 10)) {
+      return d;
+    }
+  });
 
-  //         if( d["City"] == "City") || (d["Criticality"]=="High" || d["Criticality"]=="Low")
-  //         {
-  //             return d;
-  //         }
-
-  //     })
+  console.log("data");
+  console.log(data);
+  console.log("filteredData");
+  console.log(filteredData);
+  console.log("selectedDate");
+  console.log(selectedDate.toISOString().substr(0, 10));
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -114,21 +87,7 @@ const App = () => {
     <Container className={classes.root} maxWidth="false">
       <Grid container direction="row" spacing={3} alignItems="center">
         <Grid item xs={12} sm={12} md={3} lg={3} spacing={0}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="date-picker-inline"
-              label="Pick a date"
-              value={selectedDate}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-          </MuiPickersUtilsProvider>
+          {/* <p> {selectedDate.toISOString().substr(0, 10)} </p> */}
           <ToggleButtonGroup
             orientation="vertical"
             value={typeOfDataForTheMap}
@@ -136,6 +95,22 @@ const App = () => {
             onChange={handleTypeOfDataForTheMap}
             aria-label="text variable"
           >
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                disableToolbar
+                style={{ width: 250 }}
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Pick a date"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
             <ToggleButton
               style={{ width: 250 }}
               value="total_cases"
@@ -143,7 +118,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={rainLogo} alt="rainLogo" width="36" height="36" /> */}
-              total_cases
+              total cases
             </ToggleButton>
             <ToggleButton
               style={{ width: 250 }}
@@ -152,7 +127,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              total_deaths
+              total deaths
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -161,7 +136,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              total_cases_per_million
+              total cases per million
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -170,7 +145,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              total_deaths_per_million
+              total deaths per million
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -179,7 +154,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              hosp_patients
+              hosp patients
             </ToggleButton>
             <ToggleButton
               style={{ width: 250 }}
@@ -188,7 +163,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              total_tests
+              total tests
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -197,7 +172,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              total_vaccinations
+              total vaccinations
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -206,7 +181,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              people_fully_vaccinated
+              people fully vaccinated
             </ToggleButton>
             <ToggleButton
               style={{ width: 250 }}
@@ -215,7 +190,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              new_vaccinations
+              new vaccinations
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -233,7 +208,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              population_density
+              population density
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -242,7 +217,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              median_age
+              median age
             </ToggleButton>
             <ToggleButton
               style={{ width: 250 }}
@@ -251,7 +226,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              gdp_per_capita
+              gdp per capita
             </ToggleButton>{" "}
             <ToggleButton
               style={{ width: 250 }}
@@ -260,7 +235,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              life_expectancy
+              life expectancy
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
@@ -273,11 +248,11 @@ const App = () => {
           >
             <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
             <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-            {data.length > 0 && (
+            {filteredData.length > 0 && (
               <Geographies geography={geoUrl}>
                 {({ geographies }) =>
                   geographies.map((geo) => {
-                    const d = data.find(
+                    const d = filteredData.find(
                       (s) => s.iso_code === geo.properties.ISO_A3
                     );
                     return (
