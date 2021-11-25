@@ -23,7 +23,6 @@ import {
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-
 const App = () => {
   const [typeOfDataForTheMap, setTypeOfDataForTheMap] = useState("total_cases");
   const [data, setData] = useState([]);
@@ -38,7 +37,7 @@ const App = () => {
       setData(data);
     });
   }, [typeOfDataForTheMap]);
-  
+
   var filteredDataForMap = data.filter(function (d) {
     if (d["date"] === selectedDate.toISOString().substr(0, 10)
       && d['iso_code'] !== "OWID_WRL"
@@ -48,20 +47,7 @@ const App = () => {
       && d['iso_code'] !== "OWID_NAM"
       && d['iso_code'] !== "OWID_UMC") {
       return d;
-    }
-  });
-
-  console.log("data");
-  console.log(data);
-  console.log("filteredDataForMap");
-  console.log(filteredDataForMap);
-  console.log("selectedDate");
-  console.log(selectedDate.toISOString().substr(0, 10));
-
-  var filteredDataForColorScale = filteredDataForMap.filter(function (d) {
-    if (d[{ typeOfDataForTheMap }] !== null) {
-      return d;
-    }
+    } 
   });
 
   const listForMAxValue = filteredDataForMap.map(Object =>
@@ -69,13 +55,18 @@ const App = () => {
 
   var maxValue = Math.max.apply(Math, listForMAxValue);
 
-  console.log("filteredDataForColorScale");
-  console.log(filteredDataForColorScale);
-  console.log("listForMAxValue");
-  console.log(listForMAxValue);
-  console.log("maxValue");
-  console.log(maxValue);
-
+  // console.log("data");
+  // console.log(data);
+  // console.log("filteredDataForMap");
+  // console.log(filteredDataForMap);
+  // console.log("selectedDate");
+  // console.log(selectedDate.toISOString().substr(0, 10));
+  // console.log("filteredDataForColorScale");
+  // console.log(filteredDataForColorScale);
+  // console.log("listForMAxValue");
+  // console.log(listForMAxValue);
+  // console.log("maxValue");
+  // console.log(maxValue);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -90,7 +81,6 @@ const App = () => {
   const colorScale = scaleLinear()
     .domain([0, maxValue])
     .range(["#ffedea", "#ff5233"])
-  // .interpolate(interpolateHcl);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -164,7 +154,6 @@ const App = () => {
               aria-label="left aligned"
               className={classes.button}
             >
-              {/* <img src={rainLogo} alt="rainLogo" width="36" height="36" /> */}
               total cases
             </ToggleButton>
             <ToggleButton
@@ -173,7 +162,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               total deaths
             </ToggleButton>{" "}
             <ToggleButton
@@ -182,7 +170,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               total cases per million
             </ToggleButton>{" "}
             <ToggleButton
@@ -191,7 +178,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               total deaths per million
             </ToggleButton>{" "}
             <ToggleButton
@@ -200,7 +186,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               hospital patients
             </ToggleButton>
             <ToggleButton
@@ -209,7 +194,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               total tests
             </ToggleButton>{" "}
             <ToggleButton
@@ -218,7 +202,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               total vaccinations
             </ToggleButton>{" "}
             <ToggleButton
@@ -227,7 +210,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               people fully vaccinated
             </ToggleButton>
             <ToggleButton
@@ -236,7 +218,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               new vaccinations
             </ToggleButton>{" "}
             <ToggleButton
@@ -245,7 +226,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               population
             </ToggleButton>
             <ToggleButton
@@ -254,7 +234,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               population density
             </ToggleButton>{" "}
             <ToggleButton
@@ -263,7 +242,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               median age
             </ToggleButton>
             <ToggleButton
@@ -272,7 +250,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               gdp per capita
             </ToggleButton>{" "}
             <ToggleButton
@@ -281,7 +258,6 @@ const App = () => {
               aria-label="right aligned"
               className={classes.button}
             >
-              {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
               life expectancy
             </ToggleButton>
           </ToggleButtonGroup>
