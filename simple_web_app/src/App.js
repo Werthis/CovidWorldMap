@@ -30,7 +30,6 @@ const App = () => {
   const [selectedDate, setSelectedDate] = useState(
     new Date("2020-04-17T21:11:54")
   );
-  // const listForMAxValue = [];
 
   useEffect(() => {
     csv(
@@ -39,7 +38,7 @@ const App = () => {
       setData(data);
     });
   }, [typeOfDataForTheMap]);
-  // OWID_NAM
+  
   var filteredDataForMap = data.filter(function (d) {
     if (d["date"] === selectedDate.toISOString().substr(0, 10)
       && d['iso_code'] !== "OWID_WRL"
@@ -65,15 +64,9 @@ const App = () => {
     }
   });
 
-
-  // for (let i = 0; i < filteredDataForMap.length; i++) {
-  //   listForMAxValue.push(filteredDataForMap[i])
-  // }
-
   const listForMAxValue = filteredDataForMap.map(Object =>
     Object[typeOfDataForTheMap]);
 
-  // const maxValue = Math.max(listForMAxValue);
   var maxValue = Math.max.apply(Math, listForMAxValue);
 
   console.log("filteredDataForColorScale");
@@ -95,7 +88,7 @@ const App = () => {
   };
 
   const colorScale = scaleLinear()
-    .domain([10, maxValue ])
+    .domain([0, maxValue])
     .range(["#ffedea", "#ff5233"])
   // .interpolate(interpolateHcl);
 
