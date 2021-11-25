@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import { Container } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
@@ -8,11 +9,9 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-
 import { makeStyles } from "@material-ui/core/styles";
 import { csv } from "d3-fetch";
-import { scaleLinear, scalePow, scaleQuantile, scaleSqrt, scaleQuantize, scaleSequential } from "d3-scale";
-import { interpolateHcl } from "d3-interpolate";
+import { scaleLinear } from "d3-scale";
 import {
   ComposableMap,
   Geographies,
@@ -33,8 +32,9 @@ const App = () => {
   const [typeOfDataForTheMap, setTypeOfDataForTheMap] = useState("total_cases");
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
-    new Date("2020-02-26T21:11:54")
+    new Date("2020-04-17T21:11:54")
   );
+  const listForMAxValue = [];
 
   useEffect(() => {
     csv(
@@ -44,7 +44,7 @@ const App = () => {
     });
   }, [typeOfDataForTheMap]);
 
-  var filteredData = data.filter(function (d) {
+  var filteredDataForMap = data.filter(function (d) {
     if (d["date"] === selectedDate.toISOString().substr(0, 10)) {
       return d;
     }
@@ -52,10 +52,32 @@ const App = () => {
 
   console.log("data");
   console.log(data);
-  console.log("filteredData");
-  console.log(filteredData);
+  console.log("filteredDataForMap");
+  console.log(filteredDataForMap);
   console.log("selectedDate");
   console.log(selectedDate.toISOString().substr(0, 10));
+
+  var filteredDataForColorScale = filteredDataForMap.filter(function (d) {
+    if (d[{ typeOfDataForTheMap }] !== null) {
+      return d;
+    }
+  });
+
+
+  // for (let i = 0; i < filteredDataForMap.length; i++) {
+  //   listForMAxValue.push(filteredDataForMap[i])
+  // }
+
+  filteredDataForMap.map((Object) => {
+    listForMAxValue.push(Object.typeOfDataForTheMap);
+  });
+
+  console.log("filteredDataForColorScale");
+  console.log(filteredDataForColorScale);
+  console.log("listForMAxValue");
+  console.log(listForMAxValue);
+
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -79,14 +101,33 @@ const App = () => {
     button: {
       background: "#F5F5DC",
     },
+    titleText: {
+      padding: theme.spacing(2),
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+      background: "#FFFACD",
+    },
+    infoText: {
+      padding: theme.spacing(2),
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+      background: "#F5F5DC",
+      fontSize: 22,
+    },
   }));
 
   const classes = useStyles();
 
   return (
-    <Container className={classes.root} maxWidth="false">
-      <Grid container direction="row" spacing={3} alignItems="center">
-        <Grid item xs={12} sm={12} md={3} lg={3} spacing={0}>
+    <Container className={classes.root} maxWidth="false" >
+      <Paper className={classes.titleText} elevation={3}>
+        COVID DATA ON MAP
+      </Paper>
+      <Paper className={classes.infoText} elevation={3}>
+        This is covid-19 data on map app. Choose the data and data you are interested in. It will appear on the map.
+      </Paper>
+      <Grid container spacing={3} >
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           {/* <p> {selectedDate.toISOString().substr(0, 10)} </p> */}
           <ToggleButtonGroup
             orientation="vertical"
@@ -100,7 +141,7 @@ const App = () => {
                 animateYearScrolling="true"
                 minDate="2020-02-10"
                 disableFuture
-                // disableToolbar
+                disableToolbar
                 style={{ width: 250 }}
                 variant="inline"
                 format="MM/dd/yyyy"
@@ -157,7 +198,7 @@ const App = () => {
               className={classes.button}
             >
               {/* <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "} */}
-              hosp patients
+              hospital patients
             </ToggleButton>
             <ToggleButton
               style={{ width: 250 }}
@@ -242,20 +283,20 @@ const App = () => {
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item xs={12} sm={12} md={9} lg={9} spacing={0}>
-          <ComposableMap
+        <Grid item xs={12} sm={12} md={9} lg={9}>
+          <ComposableMap 
             projectionConfig={{
               rotate: [-10, 0, 0],
               scale: 147,
             }}
           >
-            <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
-            <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-            {filteredData.length > 0 && (
+            <Sphere stroke="#E4E5E6" strokeWidth={0.8} />
+            <Graticule stroke="#E4E5E6" strokeWidth={0.8} />
+            {filteredDataForMap.length > 0 && (
               <Geographies geography={geoUrl}>
                 {({ geographies }) =>
                   geographies.map((geo) => {
-                    const d = filteredData.find(
+                    const d = filteredDataForMap.find(
                       (s) => s.iso_code === geo.properties.ISO_A3
                     );
                     return (
