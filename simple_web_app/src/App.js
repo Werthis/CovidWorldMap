@@ -11,7 +11,7 @@ import {
 
 import { makeStyles } from "@material-ui/core/styles";
 import { csv } from "d3-fetch";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear, scalePow, scaleQuantile, scaleSqrt, scaleQuantize, scaleSequential } from "d3-scale";
 import { interpolateHcl } from "d3-interpolate";
 import {
   ComposableMap,
@@ -25,8 +25,8 @@ const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
 const colorScale = scaleLinear()
-  // .domain([0.29, 0.68])
-  .range(["#FFC0CB", "#DC143C"]);
+  .domain([10, 100000])
+  .range(["#ffedea", "#ff5233"])
 // .interpolate(interpolateHcl);
 
 const App = () => {
@@ -97,7 +97,10 @@ const App = () => {
           >
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
-                disableToolbar
+                animateYearScrolling="true"
+                minDate="2020-02-10"
+                disableFuture
+                // disableToolbar
                 style={{ width: 250 }}
                 variant="inline"
                 format="MM/dd/yyyy"
