@@ -23,10 +23,6 @@ import {
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const colorScale = scaleLinear()
-  .domain([10, 100000])
-  .range(["#ffedea", "#ff5233"])
-// .interpolate(interpolateHcl);
 
 const App = () => {
   const [typeOfDataForTheMap, setTypeOfDataForTheMap] = useState("total_cases");
@@ -34,7 +30,7 @@ const App = () => {
   const [selectedDate, setSelectedDate] = useState(
     new Date("2020-04-17T21:11:54")
   );
-  const listForMAxValue = [];
+  // const listForMAxValue = [];
 
   useEffect(() => {
     csv(
@@ -43,9 +39,15 @@ const App = () => {
       setData(data);
     });
   }, [typeOfDataForTheMap]);
-
+  // OWID_NAM
   var filteredDataForMap = data.filter(function (d) {
-    if (d["date"] === selectedDate.toISOString().substr(0, 10)) {
+    if (d["date"] === selectedDate.toISOString().substr(0, 10)
+      && d['iso_code'] !== "OWID_WRL"
+      && d['iso_code'] !== "OWID_HIC"
+      && d['iso_code'] !== "OWID_EUR"
+      && d['iso_code'] !== "OWID_EUN"
+      && d['iso_code'] !== "OWID_NAM"
+      && d['iso_code'] !== "OWID_UMC") {
       return d;
     }
   });
@@ -68,15 +70,18 @@ const App = () => {
   //   listForMAxValue.push(filteredDataForMap[i])
   // }
 
-  filteredDataForMap.map((Object) => {
-    listForMAxValue.push(Object.typeOfDataForTheMap);
-  });
+  const listForMAxValue = filteredDataForMap.map(Object =>
+    Object[typeOfDataForTheMap]);
+
+  // const maxValue = Math.max(listForMAxValue);
+  var maxValue = Math.max.apply(Math, listForMAxValue);
 
   console.log("filteredDataForColorScale");
   console.log(filteredDataForColorScale);
   console.log("listForMAxValue");
   console.log(listForMAxValue);
-
+  console.log("maxValue");
+  console.log(maxValue);
 
 
   const handleDateChange = (date) => {
@@ -88,6 +93,11 @@ const App = () => {
       setTypeOfDataForTheMap(newTypeOfDataForTheMap);
     }
   };
+
+  const colorScale = scaleLinear()
+    .domain([10, maxValue ])
+    .range(["#ffedea", "#ff5233"])
+  // .interpolate(interpolateHcl);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -284,7 +294,7 @@ const App = () => {
           </ToggleButtonGroup>
         </Grid>
         <Grid item xs={12} sm={12} md={9} lg={9}>
-          <ComposableMap 
+          <ComposableMap
             projectionConfig={{
               rotate: [-10, 0, 0],
               scale: 147,
