@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { Container } from "@material-ui/core";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import { Grid, Paper, Container, makeStyles, Card } from "@material-ui/core/";
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab/";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { makeStyles } from "@material-ui/core/styles";
 import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
 import {
@@ -39,19 +35,22 @@ const App = () => {
   }, [typeOfDataForTheMap]);
 
   var filteredDataForMap = data.filter(function (d) {
-    if (d["date"] === selectedDate.toISOString().substr(0, 10)
-      && d['iso_code'] !== "OWID_WRL"
-      && d['iso_code'] !== "OWID_HIC"
-      && d['iso_code'] !== "OWID_EUR"
-      && d['iso_code'] !== "OWID_EUN"
-      && d['iso_code'] !== "OWID_NAM"
-      && d['iso_code'] !== "OWID_UMC") {
+    if (
+      d["date"] === selectedDate.toISOString().substr(0, 10) &&
+      d["iso_code"] !== "OWID_WRL" &&
+      d["iso_code"] !== "OWID_HIC" &&
+      d["iso_code"] !== "OWID_EUR" &&
+      d["iso_code"] !== "OWID_EUN" &&
+      d["iso_code"] !== "OWID_NAM" &&
+      d["iso_code"] !== "OWID_UMC"
+    ) {
       return d;
-    } 
+    }
   });
 
-  const listForMAxValue = filteredDataForMap.map(Object =>
-    Object[typeOfDataForTheMap]);
+  const listForMAxValue = filteredDataForMap.map(
+    (Object) => Object[typeOfDataForTheMap]
+  );
 
   var maxValue = Math.max.apply(Math, listForMAxValue);
 
@@ -80,7 +79,7 @@ const App = () => {
 
   const colorScale = scaleLinear()
     .domain([0, maxValue])
-    .range(["#ffedea", "#ff5233"])
+    .range(["#ffedea", "#ff5233"]);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -112,14 +111,15 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root} maxWidth="false" >
+    <Container className={classes.root} maxWidth="false">
       <Paper className={classes.titleText} elevation={3}>
         COVID DATA ON MAP
       </Paper>
       <Paper className={classes.infoText} elevation={3}>
-        This is covid-19 data on map app. Choose the data and data you are interested in. It will appear on the map.
+        This is covid-19 data on map app. Choose the data and data you are
+        interested in. It will appear on the map.
       </Paper>
-      <Grid container spacing={3} >
+      <Grid container spacing={3} alignItems="center">
         <Grid item xs={12} sm={12} md={3} lg={3}>
           {/* <p> {selectedDate.toISOString().substr(0, 10)} </p> */}
           <ToggleButtonGroup
