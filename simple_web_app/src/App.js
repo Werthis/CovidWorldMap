@@ -88,22 +88,22 @@ const App = () => {
       flexGrow: 1,
       justifyContent: "space-evenly",
       fontSize: 50,
-      background: "#FFFFF0",
+      background: "#D8BFD8",
     },
     button: {
-      background: "#F5F5DC",
+      background: "#9370DB",
     },
     titleText: {
       padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary,
-      background: "#FFFACe",
+      background: "#6A5ACD",
     },
     infoText: {
       padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary,
-      background: "#F5F5DC",
+      background: "#9370DB",
       fontSize: 22,
     },
   }));
