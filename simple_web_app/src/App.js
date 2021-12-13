@@ -97,7 +97,7 @@ const App = () => {
       padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary,
-      background: "#FFFACD",
+      background: "#FFFACe",
     },
     infoText: {
       padding: theme.spacing(2),
@@ -113,7 +113,7 @@ const App = () => {
   return (
     <Container className={classes.root} maxWidth="false">
       <Paper className={classes.titleText} elevation={3}>
-        COVID DATA ON MAP
+        COVID WORLD MAP
       </Paper>
       <Paper className={classes.infoText} elevation={3}>
         This is covid-19 data on map app. Choose the data and data you are
